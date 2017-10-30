@@ -31,3 +31,23 @@
             if (a % i == 0) and (b % i == 0):
                 otvet = i
         return otvet
+#recursive
+    def gcdRecur(a, b):
+        '''
+        a, b: positive integers
+
+        returns: a positive integer, the greatest common divisor of a & b.
+        '''
+        # Your code here
+        amax = max(a, b)
+        bmin = min(a, b)
+        a, b = amax, bmin
+        if a // b == 0:
+            return 1
+        elif a % b == 0:
+            return b
+        else:
+            c = b
+            b = a - (a // b) * b
+            a = c
+            return gcdRecur(a, b)
