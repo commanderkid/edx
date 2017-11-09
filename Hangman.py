@@ -89,3 +89,38 @@ print("Welcome to the game, Hangman!")
 print("I am thinking of a word that is " + str(len(secretWord)) + " letters long.")
 print("-------------")
 hangman(isWordGuessed, getGuessedWord, getAvailableLetters, secretWord, lettersGuessed, guesses)
+
+
+
+def hangman(secretWord, guesses = 8):
+    print("Welcome to the game, Hangman!")
+    print("I am thinking of a word that is " + str(len(secretWord)) + " letters long.")
+    print("-------------")
+    return helper(secretWord, guesses, lettersGuessed = "")
+
+
+def helper(secretWord, guesses, lettersGuessed = ""):
+    if guesses > 0:
+        print("You have " + str(guesses) + " guesses left.")
+        print("Available Letters: " + getAvailableLetters(lettersGuessed))
+        newGues = input("Please guess a letter: ").lower()
+        if newGues in lettersGuessed:
+            print("Oops! You've already guessed that letter: " + getGuessedWord(secretWord, lettersGuessed))
+            print("-------------")
+            return helper(secretWord, guesses, lettersGuessed)
+        else:
+            lettersGuessed = lettersGuessed + newGues
+
+        if (newGues in secretWord) or isWordGuessed(secretWord, lettersGuessed):
+            print("Good guess: " + getGuessedWord(secretWord, lettersGuessed))
+            print("-------------")
+            if getGuessedWord(secretWord, lettersGuessed) == secretWord:
+                return print("Congratulations, you won!")
+            return helper(secretWord, guesses, lettersGuessed)
+        else:
+            print("Oops! That letter is not in my word: " + getGuessedWord(secretWord, lettersGuessed))
+            print("-------------")
+            return helper(secretWord, guesses - 1, lettersGuessed)
+    else:
+        print("Sorry, you ran out of guesses. The word was " + secretWord +".")
+
